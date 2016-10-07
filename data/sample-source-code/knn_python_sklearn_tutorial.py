@@ -19,9 +19,10 @@ def read_data(typeData, labelsInfo, imageSize, path):
 imageSize = 400 # 20 x 20 pixels
 
 #Set location of data files , folders
-path = ...
+path = "./data"
 
 labelsInfoTrain = pd.read_csv("{0}/trainLabels.csv".format(path))
+print(labelsInfoTrain.shape)
 
 #Read training matrix
 xTrain = read_data("train", labelsInfoTrain, imageSize, path)
@@ -46,9 +47,10 @@ from sklearn.grid_search import GridSearchCV
 import time
 start = time.time()
 model = KNN(n_neighbors=1)
+print(xTrain.shape)
 cvAccuracy = np.mean(k_fold_CV(model, xTrain, yTrain, cv=2, scoring="accuracy"))
-print "The 2-CV accuracy of 1NN", cvAccuracy
-print time.time() - start, "seconds elapsed"
+print("The 2-CV accuracy of 1NN", cvAccuracy)
+print(time.time() - start, "seconds elapsed")
 
 # Tuning the value for k
 
@@ -56,6 +58,6 @@ start = time.time()
 tuned_parameters = [{"n_neighbors":list(range(1,5))}]
 clf = GridSearchCV( model, tuned_parameters, cv=5, scoring="accuracy")
 clf.fit(xTrain, yTrain)
-print clf.grid_scores_
-print time.time() - start, "seconds elapsed"
+print(clf.grid_scores_)
+print(time.time() - start, "seconds elapsed")
 

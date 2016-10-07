@@ -1,6 +1,6 @@
 # Loading Data
 
-import pandas as pd 
+import pandas as pd
 from skimage.io import imread
 import numpy as np
 
@@ -19,7 +19,7 @@ def read_data(typeData, labelsInfo, imageSize, path):
 imageSize = 400 # 20 x 20 pixels
 
 #Set location of data files , folders
-path = ...
+path = ".."
 
 labelsInfoTrain = pd.read_csv("{0}/trainLabels.csv".format(path))
 
@@ -32,7 +32,7 @@ labelsInfoTest = pd.read_csv("{0}/sampleSubmission.csv".format(path))
 #Read test matrix
 xTest = read_data("test", labelsInfoTest, imageSize, path)
 
-yTrain = map(ord, labelsInfoTrain["Class"])
+yTrain = list(map(ord, labelsInfoTrain["Class"]))
 
 # Defining main functions
 
@@ -42,7 +42,7 @@ def euclidean_distance (a, b):
 
 def get_k_nearest_neighbors(x, i, k):
  imageI = x[i,:]
- distances = [euclidean_distance(imageI, x[j,:]) for j in xrange(x.shape[0])]     
+ distances = [euclidean_distance(imageI, x[j,:]) for j in range(x.shape[0])]
  sortedNeighbors = np.argsort(distances)
  kNearestNeighbors = sortedNeighbors[1:(k+1)]
  return kNearestNeighbors
@@ -67,6 +67,6 @@ def assign_label(x, y, k, i):
 import time
 start = time.time()
 k=1
-yPredictions = [assign_label(xTrain, yTrain, k, i) for i in xrange(xTrain.shape[0])]
-print time.time() - start, "seconds elapsed"
+yPredictions = [assign_label(xTrain, yTrain, k, i) for i in range(xTrain.shape[0])]
+print(time.time() - start, "seconds elapsed")
 
