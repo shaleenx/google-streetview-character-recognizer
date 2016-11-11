@@ -5,10 +5,9 @@
 import time
 import numpy as np
 import csv
+from sklearn.multiclass import OneVsRestClassifier
 from skimage.io import imread
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.cross_validation import cross_val_score as k_fold_CV
-from sklearn.grid_search import GridSearchCV
+from sklearn.svm import SVC
 import pickle
 
 def read_images(path, labelsInfo, typeData, imageSize):
@@ -48,13 +47,13 @@ yTrain = np.array(list(map(ord, labelsInfoTrain[:, 1])))
 
 start = time.time()
 
-model = RandomForestClassifier(n_estimators=400, n_jobs=-1)
+model = OneVsRestClassifier(SVC())
 
 model.fit(xTrain, yTrain)
 
 print(model.score(xTrain, yTrain))
 
-print(model.predict(xTrain[2]))
+print(chr(model.predict(xTrain[3])[0]))
 
 # save the model to disk
 #filename = 'model.sav'
