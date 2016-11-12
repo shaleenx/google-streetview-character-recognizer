@@ -8,6 +8,15 @@ from flask_googlemaps import Map, icons
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
+def clearUploadFolder():
+    folder_path = app.config['UPLOAD_FOLDER']
+    for file_object in os.listdir(folder_path):
+        file_object_path = os.path.join(folder_path, file_object)
+        if os.path.isfile(file_object_path):
+            os.unlink(file_object_path)
+        else:
+            shutil.rmtree(file_object_path)
+
 @app.route('/r')
 def r():
     print(request)
@@ -79,11 +88,16 @@ def upload():
     longitude = request.form['inputlong']
     num_of_images = request.form['num-of-images']
     files = request.files['image-file']
+    # uploaded_files = request.files.getlist('image-file[]')
 
-    print(request.files['image-file'])
+    # print(uploaded_files)
+    clearUploadFolder()
+    # filenames = []
 
+    # for files in uploaded_files:
     if files and allowed_file(files.filename):
         filename = secure_filename(files.filename)
         files.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # filenames.append(filename)
 
     return redirect(url_for('index'))
