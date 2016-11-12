@@ -86,18 +86,18 @@ def index():
 def upload():
     latitude = request.form['inputlat']
     longitude = request.form['inputlong']
-    num_of_images = request.form['num-of-images']
-    files = request.files['image-file']
-    # uploaded_files = request.files.getlist('image-file[]')
+    num_of_images = int(request.form['num-of-images'])
+    files = []
+    for i in range(num_of_images):
+        files.append(request.files['image-file' + str(i)])
 
-    # print(uploaded_files)
     clearUploadFolder()
-    # filenames = []
 
-    # for files in uploaded_files:
-    if files and allowed_file(files.filename):
-        filename = secure_filename(files.filename)
-        files.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # filenames.append(filename)
+    for i, _file in enumerate(files):
+        if _file and allowed_file(_file.filename):
+            filename = secure_filename(_file.filename)
+            _file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            imageFormat = _file.filename.rsplit('.', 1)[1]
+            os.rename(os.path.join(app.config['UPLOAD_FOLDER'], filename), os.path.join(app.config['UPLOAD_FOLDER'], 'Image' + str(i) + '.' + imageFormat))
 
     return redirect(url_for('index'))

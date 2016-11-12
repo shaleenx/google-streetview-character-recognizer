@@ -42,16 +42,7 @@
                                 <input class="form-control" type="number" value="3" name="num-of-images" id="num-of-images" onclick="updateUploads(this)">
                             </div>
                         </div>
-                        <div id="upload-buttons">
-                            <!-- <div class="form-group">
-                                <label for="image-file">Select Images</label>
-                                <input type="file" class="file-loading" name="image-file[]" id="image-file[]" aria-describedby="fileHelp" multiple>
-                                <input type="file" class="form-control-file" name="image-file" id="image-file" aria-describedby="fileHelp">
-                                <small id="fileHelp" class="form-text text-muted">
-                                This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.
-                                </small>
-                            </div> -->
-                        </div>
+                        <div id="upload-buttons"></div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
@@ -67,6 +58,8 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
+    initializeUploads()
+
     function updateUploads(self) {
         var num_of_images = self.value;
         var container = $("#upload-buttons")
@@ -76,7 +69,17 @@
         for (var i = 0; i < num_of_images; i++) {
             html += "<div class='form-group'> <input type='file' class='form-control-file' name='image-file" + i + "' id='image-file' /> </div>"
         }
-        console.log(html);
+        $("#upload-buttons").html(html)
+    }
+
+    function initializeUploads() {
+        var container = $("#upload-buttons")
+        container.empty()
+
+        html = ""
+        for (var i = 0; i < 3; i++) {
+            html += "<div class='form-group'> <input type='file' class='form-control-file' name='image-file" + i + "' id='image-file' /> </div>"
+        }
         $("#upload-buttons").html(html)
     }
 </script>
