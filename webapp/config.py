@@ -1,3 +1,1 @@
-WTF_CSRF_ENABLED = True
-SECRET_KEY = 'datamining-bro'
 GOOGLEMAPS_KEY = 'AIzaSyACFwNwWltDdXCzkZRMWu8cS9oy_QloB-Q'

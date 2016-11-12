@@ -1,15 +1,36 @@
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
+import os
 from app import app
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map, icons
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+@app.route('/r')
+def r():
+    print(request)
 
 @app.route('/')
 @app.route('/index')
 def index():
+    markers = []
+    latitude = 23.1890566
+    longitude = 72.6220352
+
+    if request.method == 'POST':
+        latitude = float(request.form['inputlat'])
+        longitude = float(request.form['inputlong'])
+        num_of_images = int(request.form['num-of-images'])
+        files = request.files['image-file']
+
+        if files and allowed_file(files.filename):
+            filename = secure_filename(files.filename)
+            files.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        return redirect(url_for('index'))
+
     mymap = Map(
         identifier="mymap",
         varname="mymap",
@@ -21,8 +42,8 @@ def index():
             "position:absolute;"
             "z-index:-1;"
         ),
-        lat=23.187148,
-        lng=72.629544,
+        lat=latitude,
+        lng=longitude,
         markers=[
             {
                 'icon': '//maps.google.com/mapfiles/ms/icons/green-dot.png',
@@ -48,16 +69,21 @@ def index():
                     "<br>Images allowed!"
                 )
             }
-        ],
-        # maptype = "TERRAIN",
-        # zoom="5"
+        ]
     )
     return render_template('index.html', mymap=mymap)
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files['file']
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return redirect(url_for('index'))
+    latitude = request.form['inputlat']
+    longitude = request.form['inputlong']
+    num_of_images = request.form['num-of-images']
+    files = request.files['image-file']
+
+    print(request.files['image-file'])
+
+    if files and allowed_file(files.filename):
+        filename = secure_filename(files.filename)
+        files.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    return redirect(url_for('index'))
