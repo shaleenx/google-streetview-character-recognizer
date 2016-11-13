@@ -1,0 +1,6 @@
+.floating-button {
+    position: absolute;
+    left: 10px;
+    top: 20%;
+    z-index: 200
+}

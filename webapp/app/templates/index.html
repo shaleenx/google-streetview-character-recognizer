@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <title>Flask Google Maps Full Map Example</title>
+    <link rel="stylesheet" href="../static/style.css"> {{mymap.js}}
+</head>
+
+<body>
+    {{ mymap.html }}
+    <button type="button" class="btn btn-default floating-button" data-toggle="modal" data-target="#uploadModal">
+        <i class="fa fa-plus" aria-hidden="False"></i>
+    </button>
+
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" action="{{ url_for('index') }}">
+                        <div class="form-group row">
+                            <label for="inputlat" class="col-sm-2 col-form-label">lat</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="inputlat" id="inputlat" placeholder="Latitude">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputlong" class="col-sm-2 col-form-label">long</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="inputlong" id="inputlong" placeholder="Longitude">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-number-input" class="col-xs-2 col-form-label">Number of Images</label>
+                            <div class="col-xs-10">
+                                <input class="form-control" type="number" value="3" name="num-of-images" id="num-of-images" onclick="updateUploads(this)">
+                            </div>
+                        </div>
+                        <div id="upload-buttons"></div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Send message</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    initializeUploads()
+
+    function updateUploads(self) {
+        var num_of_images = self.value;
+        var container = $("#upload-buttons")
+        container.empty()
+
+        html = ""
+        for (var i = 0; i < num_of_images; i++) {
+            html += "<div class='form-group'> <input type='file' class='form-control-file' name='image-file" + i + "' id='image-file' /> </div>"
+        }
+        $("#upload-buttons").html(html)
+    }
+
+    function initializeUploads() {
+        var container = $("#upload-buttons")
+        container.empty()
+
+        html = ""
+        for (var i = 0; i < 3; i++) {
+            html += "<div class='form-group'> <input type='file' class='form-control-file' name='image-file" + i + "' id='image-file' /> </div>"
+        }
+        $("#upload-buttons").html(html)
+    }
+</script>
+
+</html>
