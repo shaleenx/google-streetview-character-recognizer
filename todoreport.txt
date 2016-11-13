@@ -1,0 +1,19 @@
+custom knn
+report
+try different methods - random forests, nn -------DONE------ randomforest, svm, knn
+
+
+report --- areas to cover
+
+
+- What all models did we try, which one we chose, with whys and hows.
+- Implementations:
+    --------------------------------------------
+    Model           | Accuracy      | Time
+    --------------------------------------------
+    SVM             |
+    Random Forests  | 
+    kNN             | 99.984%       | 0.0995s
+    custom knn      | 44.565%       | 79.002s
+- Possible reasons why our choice outperformed others
+- Webapp. info, Framework, demo.

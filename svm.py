@@ -51,9 +51,11 @@ model = OneVsRestClassifier(SVC())
 
 model.fit(xTrain, yTrain)
 
-print(model.score(xTrain, yTrain))
+print("Training Time:", time.time() - start, "seconds")
 
-print(chr(model.predict(xTrain[3])[0]))
+print("Accuracy Score:", model.score(xTrain, yTrain))
+
+print("Dummy Prediction:", chr(model.predict(xTrain[3])[0]))
 
 # save the model to disk
 #filename = 'model.sav'

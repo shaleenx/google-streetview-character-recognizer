@@ -52,9 +52,11 @@ model = RandomForestClassifier(n_estimators=400, n_jobs=-1)
 
 model.fit(xTrain, yTrain)
 
-print(model.score(xTrain, yTrain))
+print("Training Time:", time.time() - start, "seconds")
 
-print(model.predict(xTrain[2]))
+print("Accuracy Score:", model.score(xTrain, yTrain))
+
+print("Dummy Prediction", chr(model.predict(xTrain[2])))
 
 # save the model to disk
 #filename = 'model.sav'
