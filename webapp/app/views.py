@@ -4,6 +4,14 @@ import os
 from app import app
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map, icons
+import pickle
+from sklearn.neighbors import KNeighborsClassifier as knn
+from skimage.io import imread
+import numpy as np
+import time
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model = pickle.load(open(os.path.join(current_dir, 'model.sav'), "rb"))
 
 markers = [
     {
@@ -31,6 +39,23 @@ markers = [
         )
     }
 ]
+
+def read_images(path, numImages, imageSize):
+    x = np.zeros((numImages, imageSize))
+
+    for idImage in range(numImages):
+        fileName = "{0}/uploads/Image{1}.Bmp".format(path, idImage)
+        image = imread(fileName, as_grey=True)
+
+        x[idImage, :] = np.reshape(image, (1, imageSize))
+
+    return x
+
+def recognize(path=current_dir, numImages=2, imageSize=400):
+    x = read_images(path, numImages, imageSize)
+    val = ''.join(map(chr, model.predict(x)))
+    print("Answer:", val)
+    return val
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
@@ -69,7 +94,7 @@ def index():
 
         newMarker = {
             'icon': icons.dots.yellow,
-            'title': 'Title goes here',
+            'title': recognize(numImages=num_of_images),
             'lat': latitude,
             'lng': longitude,
         }
