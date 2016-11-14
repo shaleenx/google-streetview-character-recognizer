@@ -1,6 +1,6 @@
 custom knn
 report
-try different methods - random forests, nn -------DONE------ randomforest, svm, knn
+try different methods - random forests, nn -------DONE------ randomforest, svm, knn ----- rnn, extra-trees, nearest centroid
 
 
 report --- areas to cover
@@ -15,5 +15,7 @@ report --- areas to cover
     Random Forests  | 
     kNN             | 99.984%       | 0.0995s
     custom knn      | 44.565%       | 79.002s
+    rNN             | 99.332%       | 0.0879s
+
 - Possible reasons why our choice outperformed others
 - Webapp. info, Framework, demo.
