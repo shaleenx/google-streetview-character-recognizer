@@ -5,37 +5,10 @@
 import time
 import numpy as np
 import csv
+from sklearn.cluster import Birch
 from sklearn.metrics import accuracy_score as score
 from skimage.io import imread
-from sklearn.cross_validation import cross_val_score as k_fold_CV
-from sklearn.grid_search import GridSearchCV
 import pickle
-
-def euclidean_distance(a, b):
-    dif = a - b
-    return dif.dot(dif)
-
-def get_k_nearest_neighbors(x, i, k):
-    imageI = x[i, :]
-    distances = [euclidean_distance(imageI, x[j, :]) for j in range(x.shape[0])]
-    sortedNeighbors = np.argsort(distances)
-    kNearestNeighbors = sortedNeighbors[1:(k+1)]
-    return kNearestNeighbors
-
-def assign_label(x, y, k, i):
-    kNearestNeighbors = get_k_nearest_neighbors(x, i, k)
-    counts = {}
-    highestCount = 0
-    mostPopularLabel = 0
-    for n in kNearestNeighbors:
-        labelOfN = y[n]
-        if labelOfN not in counts:
-            counts[labelOfN] = 1
-        counts[labelOfN] += 1
-        if counts[labelOfN] > highestCount:
-            highestCount = counts[labelOfN]
-            mostPopularLabel = labelOfN
-    return mostPopularLabel
 
 def read_images(path, labelsInfo, typeData, imageSize):
     x = np.zeros((labelsInfo.shape[0], imageSize))
@@ -74,23 +47,19 @@ yTrain = np.array(list(map(ord, labelsInfoTrain[:, 1])))
 
 start = time.time()
 
-k = 1
+model = Birch(branching_factor=50, n_clusters=None, threshold=0.5,compute_labels=True)
 
-yPredictions = [assign_label(xTrain, yTrain, k, i) for i in range(xTrain.shape[0])]
+model.fit(xTrain, yTrain)
 
-print("Training Time:", time.time()-start, "seconds")
+yPredictions = model.predict(xTrain)
 
-print("Accuracy Score", score(yTrain, yPredictions))
+print("Training Time:", time.time() - start, "seconds")
 
-print("Dummy Prediction", chr(yPredictions[27]))
+print("Accuracy Score:", score(yPredictions, yTrain))
 
-#model = knn(n_neighbors = 1)
-
-#model.fit(xTrain, yTrain)
-
-#print(model.score(xTrain, yTrain))
-
-#print(model.predict(xTrain[2]))
+pred = model.predict(xTrain[3])[0]
+print(pred)
+print("Dummy Prediction:", chr(pred))
 
 # save the model to disk
 #filename = 'model.sav'
