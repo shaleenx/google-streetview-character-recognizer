@@ -52,8 +52,6 @@ model.fit(xTrain, yTrain)
 
 print("Training Time:", time.time() - start, "seconds")
 
-print("Mean accuracy:", np.mean(yTrain == (model.predict(xTrain))))
-
 print("Accuracy Score:", model.score(xTrain, yTrain))
 
 print("Dummy Prediction:", chr(model.predict(xTrain[0])[0]))
