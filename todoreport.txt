@@ -1,6 +1,9 @@
 custom knn
 report
-try different methods - random forests, nn -------DONE------ randomforest, svm, knn ----- rnn, extra-trees, nearest centroid
+try different methods -
+    DONE: randomforest, svm, knn, rnn, nearest_centroid
+    Pending: extra-trees, birch
+    Discarded:  Linear regression, Neural Network, K-means
 
 
 report --- areas to cover
@@ -11,11 +14,13 @@ report --- areas to cover
     --------------------------------------------
     Model           | Accuracy      | Time
     --------------------------------------------
-    SVM             |
-    Random Forests  | 
+    SVM             | 77.351%       | 129.986s
+    Random Forests  | 99.984%       | 54.1334s
     kNN             | 99.984%       | 0.0995s
     custom knn      | 44.565%       | 79.002s
     rNN             | 99.332%       | 0.0879s
+    nearestcentroids| 05.729%       | 0.0121s
+    extra-trees     | 99.984%       | 0.5003s  
 
 - Possible reasons why our choice outperformed others
 - Webapp. info, Framework, demo.

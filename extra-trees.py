@@ -6,7 +6,7 @@ import time
 import numpy as np
 import csv
 from skimage.io import imread
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.cross_validation import cross_val_score as k_fold_CV
 from sklearn.grid_search import GridSearchCV
 import pickle
@@ -48,7 +48,7 @@ yTrain = np.array(list(map(ord, labelsInfoTrain[:, 1])))
 
 start = time.time()
 
-model = RandomForestClassifier(n_estimators=400, n_jobs=-1)
+model = ExtraTreesClassifier()
 
 model.fit(xTrain, yTrain)
 
@@ -56,7 +56,7 @@ print("Training Time:", time.time() - start, "seconds")
 
 print("Accuracy Score:", model.score(xTrain, yTrain))
 
-print("Dummy Prediction:", chr(model.predict(xTrain[2])))
+print("Dummy Prediction", chr(model.predict(xTrain[2])))
 
 # save the model to disk
 #filename = 'model.sav'
