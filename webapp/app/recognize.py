@@ -14,7 +14,7 @@ class Recognizer:
         x = np.zeros((numImages, imageSize))
 
         for idImage in range(numImages):
-            fileName = "{0}/input/{1}.Bmp".format(path, idImage)
+            fileName = "{0}/uploads/Image{1}.png".format(path, idImage)
             image = imread(fileName, as_grey=True)
 
             x[idImage, :] = np.reshape(image, (1, imageSize))
