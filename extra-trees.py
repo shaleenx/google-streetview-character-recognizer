@@ -48,7 +48,7 @@ yTrain = np.array(list(map(ord, labelsInfoTrain[:, 1])))
 
 start = time.time()
 
-model = ExtraTreesClassifier()
+model = ExtraTreesClassifier(n_estimators=100)
 
 model.fit(xTrain, yTrain)
 

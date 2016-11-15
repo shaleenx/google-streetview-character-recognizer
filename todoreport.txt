@@ -5,7 +5,6 @@ try different methods -
     Pending: extra-trees, birch
     Discarded:  Linear regression, Neural Network, K-means
 
-
 report --- areas to cover
 
 
@@ -14,7 +13,7 @@ report --- areas to cover
     --------------------------------------------
     Model           | Accuracy      | Time
     --------------------------------------------
-    SVM             | 77.351%       | 129.986s
+    SVM             | 87.351%       | 129.986s
     Random Forests  | 99.984%       | 54.1334s
     kNN             | 99.984%       | 0.0995s
     custom knn      | 44.565%       | 79.002s
@@ -24,3 +23,15 @@ report --- areas to cover
 
 - Possible reasons why our choice outperformed others
 - Webapp. info, Framework, demo.
+
+
+
+
+
+------------------------------
+
+conclusion _ why knn is better --- DONE
+webapp - description and screenshots
+related work
+why svm low accuracy
+
