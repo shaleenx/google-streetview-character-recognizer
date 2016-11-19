@@ -53,11 +53,12 @@ model.fit(xTrain, yTrain)
 
 print(model.score(xTrain, yTrain))
 
-print(model.predict(xTrain[2]))
+print(chr(model.predict(xTrain[2])))
 
 # save the model to disk
-filename = 'model.sav'
+filename = 'webapp/app/model.sav'
 pickle.dump(model, open(filename, 'wb'))
+print("Model saved in", filename)
 
 # adjust the number of folds later
 #crossvalAccuracy = (k_fold_CV(model, xTrain, yTrain, cv=2, scoring="accuracy"))
