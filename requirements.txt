@@ -1,0 +1,1 @@
+numpy, sklearn, skimage, pickle, django, flask, werkzeug.utils
